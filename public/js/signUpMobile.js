@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ]).then(() => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: false })
             .then(stream => {
+              
+                video.style.transform = "scaleX(-1)";
                 video.srcObject = stream;
                 video.onloadedmetadata = () => {
                     video.play();
@@ -41,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
       canvas.style.position = 'absolute';
       canvas.style.top = video.offsetTop + 'px';
       canvas.style.left = video.offsetLeft + 'px';
+      canvas.style.transform = "scaleX(-1)";
       const displaySize = { width: video.width, height: video.height };
       faceapi.matchDimensions(canvas, displaySize);
   

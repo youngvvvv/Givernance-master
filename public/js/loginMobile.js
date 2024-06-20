@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 video.srcObject = stream;
                 video.onloadedmetadata = () => {
                     video.play();
+                    video.style.transform = "scaleX(-1)";
                 };
                 video.onplay = initializeFaceDetection;  // 비디오가 재생 준비가 되면 얼굴 감지 초기화
             })
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function initializeFaceDetection() {
         const canvas = faceapi.createCanvasFromMedia(video);
         document.body.append(canvas);
+        canvas.style.transform = "scaleX(-1)";
         const displaySize = { width: video.width, height: video.height };
         faceapi.matchDimensions(canvas, displaySize);
   

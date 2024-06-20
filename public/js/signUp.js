@@ -15,12 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // 서버에서 받은 JSON 문자열을 객체로 변환
         let messageObject = JSON.parse(event.data);
 
-        // 로컬 스토리지에 객체를 문자열로 저장하기 전에 객체로 처리
-        let receivedMessages = JSON.parse(localStorage.getItem('receivedMessages')) || [];
-        receivedMessages.push(messageObject);  // 객체를 배열에 추가
+       // 로컬 스토리지에 마지막 메시지를 저장
+        localStorage.setItem('receivedMessage', JSON.stringify(messageObject));
 
-        // 배열을 문자열로 변환하여 로컬 스토리지에 저장
-        localStorage.setItem('receivedMessages', JSON.stringify(receivedMessages));
 
         // 화면 업데이트
         updateReceivedMessages();
@@ -30,15 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const receivedMessagesDiv = document.getElementById('receivedMessages');
         if (receivedMessagesDiv) {
             receivedMessagesDiv.innerHTML = ''; // 기존 내용을 초기화
-            let receivedMessages = JSON.parse(localStorage.getItem('receivedMessages')) || [];
-            receivedMessages.forEach((message, index) => {
-                // 객체를 문자열로 표시할 때는 JSON.stringify를 사용
-                const messageElement = document.createElement('div');
-                messageElement.textContent = `Message ${index + 1}: ${JSON.stringify(message)}`;
-                receivedMessagesDiv.appendChild(messageElement);
-            });
+            // 로컬 스토리지에서 마지막 메시지를 가져와서 화면에 표시
+        let message = JSON.parse(localStorage.getItem('receivedMessage'));
+        receivedMessagesDiv.innerHTML = JSON.stringify(message); // 객체를 문자열로 변환하여 표시
         } else {
-            console.error('The element with ID "receivedMessages" does not exist in the HTML document.');
+        console.error('The element with ID "receivedMessages" does not exist in the HTML document.');
         }
     }
     var qrcodeText = "https://192.168.174.174:8443/signUpMobile.html";
@@ -48,6 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
         colorDark : "rgb(245,245,220)",
         colorLight : "rgb(85, 107, 47)",
         text: qrcodeText
+    });
+    document.getElementById('copyButton').addEventListener('click', function() {
+        const text = document.getElementById('receivedMessages').textContent;
+        navigator.clipboard.writeText(text)
+            .then(() => alert('Message copied to clipboard!'))
+            .catch(err => console.error('Failed to copy text: ', err));
     });
 
 
