@@ -13,9 +13,11 @@
   <div class="upperLinks">
       <a id="mainPageLink" href="index.html">&#x1F54A Givernance</a>
       <div class="logIn_signUp">
-          <a id="logIn" href="login.html">Log In</a>
-          <a id="signUp" href="signup.html">Sign Up</a>
-      </div>    
+        <a id="loginLink" href="login.html">Log In</a>
+        <a id="logoutLink"  style="display: none;">Log Out</a>
+        <a id="signUp" href="signup.html">Sign Up</a>
+      </div>
+   
   </div>
   <div>
       <img id="mainDove" src="images/mainDove.png" title="dove" href="createFundraiser_test.html">
@@ -60,5 +62,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.4/lottie.min.js"></script>
 <script src="https://unpkg.com/helia/dist/index.min.js"></script>
 <script type="module" src="./js/client.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const loginLink = document.getElementById('loginLink');
+      const logoutLink = document.getElementById('logoutLink');
+      const loginStatus = localStorage.getItem('loginStatus');
+  
+      if (loginStatus === 'true') {
+          loginLink.style.display = 'none';
+          logoutLink.style.display = 'inline';
+      } else {
+          loginLink.style.display = 'inline';
+          logoutLink.style.display = 'none';
+      }
+  
+      logoutLink.addEventListener('click', function(event) {
+          event.preventDefault(); // 기본 동작을 막습니다.
+          localStorage.setItem('loginStatus', 'false'); // 로컬 스토리지의 loginstatus를 false로 설정합니다.
+          window.location.href = 'index.html'; // index.html로 리디렉트합니다.
+      });
+  });
+  </script>
 </body>
 </html>

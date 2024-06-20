@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Optional: 로그인 상태에 따라 추가 작업
         if (data) {
             console.log("Login successful!");
+  
+            // 조건이 참이면 index.html로 페이지를 리디렉트합니다.
+            window.location.href = '/index.html';
+    
             // 필요한 경우 여기서 추가 작업 수행
         } else {
             console.log("Login failed. Face does not match.");
